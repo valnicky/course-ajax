@@ -9,29 +9,7 @@
         responseContainer.innerHTML = '';
         searchedForText = searchField.value;
 
-    $.ajax({
-    	url: `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`,
-    	headers: {
-    		Authorization: 'Client-ID 462d22cae6dd1d4877bb082c9e9c6502893a9bb7305d4bf8f'
-    	}
-}).done(addImage)
-    .fail(function(err) {
-    	requestError(err, 'image');
-    });
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
+  
 
 
     const imgRequest = new XMLHttpRequest();
@@ -40,14 +18,14 @@
     	requestError(err, 'image');
     };
 
-    imgRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchesForText}`);
+    imgRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
     imgRequest.setRequestHeader('Authorization', 'Client-ID 462d22cae6dd1d4877bb082c9e9c6502893a9bb730');    
     imgRequest.send();
 
 
 
 
-const searchesForText = 'hippos';
+const searchedForText = 'hippos';
 const unsplashRequest = new XMLHttpRequest();
 
 unsplashRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
@@ -92,26 +70,22 @@ function addArticles2 () {
 	const data = JSON.parse(this.responseText);
 
 	if (data.response && data.response.docs && data.response.docs.length > 1) {
-		htmlContent = '<ul>' + data.response.docs.map.article => `<li class="article">
-		<h2><a href="${article.web_url}">${article.headline.main}</a></h2>
-		<p>${article.snippet}</p>
-		</li>`
-		.join('') + '</ul>';
+		
+		  const article = data.response.docs.map.article;
+            htmlContent = '<ul>' + `<li class="article">
+            <h2><a href="${article.web_url}">${article.headline.main}</a></h2>
+            <p>${article.snippet}</p>
+            </li>`
+            + '</ul>';
 			} else {
 				htmlContent = '<div class = "error-no-articles">No articles available</div>';
 			}
+
+
 			responseContainer.insertAdjacentHTML('beforeend', htmlContent);
 }
 
-
-
-
-
-
     });
-
-
-
 
 })();
 
