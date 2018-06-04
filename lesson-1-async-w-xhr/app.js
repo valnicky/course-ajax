@@ -19,8 +19,6 @@
     imgRequest.setRequestHeader('Authorization', 'Client-ID baa689cb580d70deccc9408da47bd6c775850737e46ba0ccee6ebe9ef5cacce0');    
     imgRequest.send();
 
-
-	const searchedForText = 'hippos';
 	const articleRequest = new XMLHttpRequest();
 	articleRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
 	articleRequest.onload = addArticles;
@@ -50,17 +48,6 @@ function addImage(){
 
 }
 
-/*function addArticles () {
-	const articleRequest = new XMLHttpRequest();
-	articleRequest.onload = addArticles;
-	articleRequest.oneerror = function(err) {
-		requestError(arr, 'articles');
-	}
-	articleRequest.open('GET', `http://api.nytimes.com/svc/serch/v2/articlesearch.json?q=${searchedForText}
-		&api-key=d5bc16eb1d774a15bea3170d7d577517`);
-	articleRequest.send();
-}*/
-
 function addArticles () {
 	let htmlContent = '';
 	const data = JSON.parse(this.responseText);
@@ -78,17 +65,13 @@ function addArticles () {
 				htmlContent = '<div class = "error-no-articles">No articles available</div>';
 			}
 
-
 			responseContainer.insertAdjacentHTML('beforeend', htmlContent);
 }
 
 function requestError (e, part) {
 	console.log(e);
-	
+	 responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
 }
-
-
-
 
     });
 
