@@ -14,9 +14,8 @@
     imgRequest.onerror = function(err) {
     	requestError(err, 'image');
     };
-
     imgRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
-    imgRequest.setRequestHeader('Authorization', 'Client-ID baa689cb580d70deccc9408da47bd6c775850737e46ba0ccee6ebe9ef5cacce0');    
+    imgRequest.setRequestHeader('Authorization', 'Client-ID c365e98e5d2a4134a09c4ebe259be3bf49b5081e8ee932cdf29db4a8a1053faa');    
     imgRequest.send();
 
 	const articleRequest = new XMLHttpRequest();
