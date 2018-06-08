@@ -22,7 +22,7 @@
     });
 
      $.ajax({
-        url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}`,
+        url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=d5bc16eb1d774a15bea3170d7d577517`,
         headers: {
             Authorization: 'Client-ID d5bc16eb1d774a15bea3170d7d577517'
         }
