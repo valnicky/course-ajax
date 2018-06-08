@@ -19,12 +19,12 @@
     imgRequest.send();
 
 	const articleRequest = new XMLHttpRequest();
-	articleRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
+	articleRequest.open('GET', `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}`);
 	articleRequest.onload = addArticles;
 	articleRequest.onerror = function (err) {
 		requestError(err, 'articles');
 	}
-	articleRequest.setRequestHeader('Authorization', 'Client-ID d5bc16eb1d774a15bea3170d7d577517 ');
+	articleRequest.setRequestHeader('Authorization', 'Client-ID d5bc16eb1d774a15bea3170d7d577517');
 	articleRequest.send();
 
 function addImage(){

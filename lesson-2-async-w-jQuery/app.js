@@ -22,42 +22,55 @@
     });
 
      $.ajax({
-        url: `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`,
+        url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}`,
         headers: {
-            Authorization: 'Client-ID d5bc16eb1d774a15bea3170d7d577517 '
+            Authorization: 'Client-ID d5bc16eb1d774a15bea3170d7d577517'
         }
     }).done(addArticles)
     .fail(function(err) {
-        requestError(err, 'image');
+        requestError(err, 'article');
     });
 
     });
 
-function addImage(images) {
-    const firstImage = images.results[0];//converted to js obj
+function addImage(data) {
+    let htmlContent = '';
 
-    responseContainer.insertAdjacentHTML('afterBegin', `<figure>
-        <img src="${firstImage.urls.small}" alt="${searchedForText}">
+    if(data && data.results && data.results.length > 1) {
+        const firstImage = data.results[0];//converted to js obj
+    htmlContent =  `<figure>
+        <img src="${firstImage.urls.regular}" alt="${searchedForText}">
         <figcaption>"${searchedForText}" by "${firstImage.user.name}" </figcaption>
-       </figure> `)
+       </figure>`;
+    } else {
+        htmlContent = '<div class= "error-no-image">No image available</diV>';
+    }
+    
+    responseContainer.insertAdjacentHTML('afterBegin',htmlContent);
 }
 
-function addArticles (articles) {
-    const firstArticle = articles.results[0];
+function addArticles (data) {
+    let htmlContent= '';
+
+    //const firstArticle = articles.results[0];
 
     if (data.response && data.response.docs && data.response.docs.length > 1) {
 
-            htmlContent = '<ul>' + data.response.docs.map(articles  => `<li class="article">
-            <h2><a href="${articles.web_url}">${articles.headline.main}</a></h2>
-            <p>${articles.snippet}</p>
+            htmlContent = '<ul>' + data.response.docs.map(article  => `<li class="article">
+            <h2><a href="${article.web_url}">${article.headline.main}</a></h2>
+            <p>${article.snippet}</p>
             </li>`
-            ).join('')
-            + '</ul>';
-            } else {
+            ).join('') + '</ul>';
+        } else {
                 htmlContent = '<div class = "error-no-articles">No articles available</div>';
             }
 
             responseContainer.insertAdjacentHTML('beforeend', htmlContent);
+}
+
+function requestError(e, part) {
+    console.log(e);
+    responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
 }
 
 })();
